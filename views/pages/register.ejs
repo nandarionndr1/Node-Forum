@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Register User</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="assets/css/main.css" />
+        <script type="text/javascript" src="passcheck.js"></script>
+        <script type="text/javascript" src="uploadimage.js"></script>
+	</head>
+	<body class="subpage">
+
+    <!-- Header -->
+      <header class = "header-user-dropdown" id="header">
+        <div class="inner">
+          <a href="index" class="logo"><strong>Commuteny Forum</strong></a>
+          <nav id="nav">
+						<div class = "header-limiter">
+            <a href="about">About</a>
+            <a href="view-guides"> Forum </a>
+						<a href="login"> Login / Sign Up </a>
+
+
+          <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+        </div>
+      </header>
+
+		<!-- Three -->
+
+
+          <!-- Modal -->
+            
+					<header class="align-center">
+						<h2>Create an Account</h2>
+					</header>
+
+          <!-- Alert (Put isset(php code))-->
+
+
+          <!--REGISTRATION FORM-->
+            <form name="register" action="register" method="post" encType="multipart/form-data">
+                  <strong>First name: </strong>
+                  <input type="text" class="form-control"  name="firstname" value="" required><br>
+
+                  <strong>Last name: </strong>
+                  <input type="text" class="form-control"  name="lastname" value="" required><br>
+
+                  <strong>Email: </strong>
+                  <input type="email" class="form-control"  name="email" value="" required><br>
+
+                  <strong>Password: </strong>
+                  <input type="password" name="password1" id="password1" class="form-control"  value="" required/><br>
+
+                  <strong>Confirm Password: </strong>
+                  <input type="password" name="password2" id="password2" onkeyup="checkPass(); return false;" class="form-control" value="" required/><br>
+                  <br>
+                  <strong>Select a profile picture:</strong>
+                  <br>
+                  <input type="file" accept="image/*" onchange="chooseFile()" name="profilepic"><br>
+                  <br>
+
+                  <input type="submit" name="submit" class="btn btn-success" value="Create Account" />
+                </form>
+				</div>
+			</section>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="inner">
+					<div class="copyright">
+						&copy;Sadtech
+					</div>
+
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+      <script>
+        function checkPass()
+        {
+            //Store the password field objects into variables ...
+            var pass1 = document.getElementById('password1');
+            var pass2 = document.getElementById('password2');
+            //Store the Confimation Message Object ...
+            var message = document.getElementById('confirmMessage');
+            //Set the colors we will be using ...
+            var goodColor = "#66cc66";
+            var badColor = "#ff6666";
+            //Compare the values in the password field 
+            //and the confirmation field
+            if(password1.value == password2.value){
+                //The passwords match. 
+                //Set the color to the good color and inform
+                //the user that they have entered the correct password 
+                pass2.style.backgroundColor = goodColor;
+                message.style.color = goodColor;
+                message.innerHTML = "Passwords Match!"
+            }else{
+                //The passwords do not match.
+                //Set the color to the bad color and
+                //notify the user.
+                pass2.style.backgroundColor = badColor;
+                message.style.color = badColor;
+                message.innerHTML = "Passwords Do Not Match!"
+            }
+        }
+      </script>
+
+	</body>
+</html>

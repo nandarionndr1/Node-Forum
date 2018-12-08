@@ -1,0 +1,72 @@
+
+<html>
+	<head>
+		<title>Add Guide</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="hover.css" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	</head>
+
+	<body class="subpage">
+
+		<!-- Header -->
+			<header class = "header-user-dropdown" id="header">
+        <div class="inner">
+          <a href="index" class="logo"><strong>Commuteny Forum</strong></a>
+          <nav id="nav">
+						<div class = "header-limiter">
+            <a href="about">About</a>
+            <a href="view-guides"> Forum </a>
+						<a href="/login">
+                <%= current_user.fname%> <%= current_user.lname %>
+            </a>
+
+
+          <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+        </div>
+      </header>
+
+			<!-- BODY -->
+			<section id="one" class="wrapper">
+				<div>
+					<header class="align-center">
+
+
+          <h3><strong>Add Guide</strong></h3>
+					</header>
+
+
+					<!-- ADD GUIDE FORM -->
+                <form name="view-guides" action="add-guide" method="post"  encType="multipart/form-data">
+                    <div class="row-uniform">
+                    <p class = "p1" style="text-alight:left"><strong> &nbsp; Title</strong></p>
+                    <input type="text" name="posttitle" id="post-title" value="" style="width:400px;"/>
+                  </div>
+                    <br>
+                    <p class = "p1" style="text-alight:left"><strong>&nbsp; Point A: </strong></p>
+                    <input type="text" name="loca" id="post-loca" value="" placeholder="E.g. Makati" style="width:400px;"/>
+                    <br>
+                    <p class = "p1" style="text-alight:left"><strong>&nbsp; Point B:</strong></p>
+                    <input type="text" name="locb" id="post-locb" value="" placeholder="E.g. MOA" style="width:400px;"/>
+                    <br>
+                    <p class = "p1" style="text-align:left"><strong>&nbsp; Description</strong></p>
+                     <input type="text" name="descp" id="descp" value="" style="width:600px; height:200px;"/>
+
+                     <br>
+
+                     <input type="file" accept="image/*" onchange="chooseFile()" name="guidepic"><br>
+                  <br>
+                
+                </div>
+                <br>
+								        <button class="submit">Post!</button> 
+
+                </form>
+			</section>
+
+	</body>
+</html>

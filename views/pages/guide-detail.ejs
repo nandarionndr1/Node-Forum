@@ -1,0 +1,147 @@
+    <!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Add Comment</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="/assets/css/main.css" />
+		<link rel="stylesheet" href="/hover.css" />
+        <script type="text/javascript" src="/addcomment.js/"></script>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="/assets/js/jquery.min.js"></script>
+	</head>
+	<body class="subpage">
+
+      <header class = "header-user-dropdown" id="header">
+        <div class="inner">
+          <a href="index" class="logo"><strong>Commuteny Forum</strong></a>
+          <nav id="nav">
+            <div class = "header-limiter">
+            <a href="/about">About</a>
+            <a href="/view-guides"> Forum </a>
+						<a href="/login"> <% if (current_user == null){ %> Login / Sign Up 
+									<%}else{%>
+										<%= current_user.fname%> <%= current_user.lname %>
+									<%}%>
+						</a>
+
+
+          <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+        </div>
+      </header>
+
+		<!-- Three -->
+			<section id="three" class="wrapper">
+				<div>
+					<header class="align-left">
+            
+            <h3><strong>&nbsp;Guides&nbsp;</strong> > &nbsp; Taft to Makati via Mrt</h3>
+					</header>
+              <div class="box">
+                <input type="hidden" id="author_id">
+                <p><strong><%= guide.title %></strong><a href=""><h4 id="creator"></h4> </a></p>
+                <label><%= guide.pointa %> - <%= guide.pointb %></label>
+                <img src="/<%= guide.pic%>" style="height:100%;width:100%;" alt="User Image"/>
+                <p><%= guide.description %></p>
+              </div>
+                  <br>
+                  <% if (current_user == null){ %> <label>Log in to Comment!</label> 
+                    <%}else{%>
+                      <h4> &nbsp; Add a Comment </h4>
+                      <form action="/add-comment" name="add-comment" method="post" encType="multipart/form-data">
+                          <input type="text" name="comment" align = "center" style="width:500px; height:50px;"><br>
+                          <input type="file" accept="image/*" name="image" onchange="chooseFile()"><br><br>
+                          <input type="hidden" name="guide_id" value="<%= guide._id %>">
+                          <button type="submit">Add comment!</button>
+                      </form>
+                    <%}%>
+                  
+                    <div class="table-wrapper">
+                      <table class = "alt">
+                    <thread>
+                      <tr>
+                        <th><strong>Image </strong> </th>  
+					              <th><strong>User</strong></th>
+                        <th> <strong> Comments </strong></th>
+                      </tr>
+                    </thread>
+                    <tbody id="comments_tbl">
+                      
+                    </tbody>
+                  </table>
+                  <center><button type="button" id="more_btn" onclick="loadMore();">more ..</button></center>
+                  
+                <input type="hidden" id="row" value="0">
+                <input type="hidden" id="all" value="">
+                </div>
+                
+                        </div>
+                    </div>
+			</section>
+	</body>
+</html>
+<script>
+$.get( "/getAuthorDetails/?id=<%= guide.author%>")
+					.done(function(auth) {
+						otor = auth[0].fname + " "+ auth[0].lname;
+						author_id = auth[0]._id;
+            $("#creator").html(otor);
+						$("#author_id").val(author_id);
+          });
+$.get( "/getComments/?id=<%= guide._id%>")
+    .done(function(data) {
+      $("#all").val(data.length);
+      data = data.slice(0,2);
+      for(d in data){ 
+      var str ='<tr>';
+          str+='<td><img src="/'+data[d].path+'" style="height:20vh;width:20vw;"></td>';
+          getAuth(str,data[d].user,data[d].comment,data[d]._id);
+      }
+      });
+    function loadMore(){
+      var row = Number($('#row').val());
+						var allcount = Number($('#all').val());
+						var rowperpage = 2;
+						row = row + rowperpage;
+						if(row <= allcount){
+							$('#row').val(row);
+							$.ajax({
+								url: '/lazyLoadComments',
+								type: 'post',
+								data: {row:row,id:'<%= guide._id%>'},
+								success: function(data){
+									console.log(data);
+									for(d in data){
+										str ='<tr>';
+                    str+='<td><img src="/'+data[d].path+'" style="height:20vh;width:20vw;"></td>';
+                    getAuth(str,data[d].user,data[d].comment,data[d]._id);    
+									}
+								}
+              });
+            }else{$("#more_btn").hide();}
+            console.log(row+1, allcount);
+            if(row+1 == allcount){$("#more_btn").hide();}
+    }
+    function getAuth(str,auth_id,cmt,cmt_id){
+    $.get( "/getAuthorDetails/?id="+auth_id)
+        .done(function(auth) {
+          console.log("d",d);
+          otor = auth[0].fname + " "+ auth[0].lname;
+          author_id = auth[0]._id;
+          <% if (current_user == null){%>
+        
+            str +='<td><a href="//">'+otor+'</a></td>';
+          <%}else{%>
+				if(author_id == '<%= current_user._id %>'){
+					str+='<td><a href="//">'+otor+'</a><form action="/view-edit-comment" method="post">';
+					str+='<input type="hidden" name="id" value="'+cmt_id+'"><button type="submit">EDIT</button></form></td>'
+				}else{
+          str +='<td><a href="//">'+otor+'</a></td>';
+        }
+				<%}%>
+          str+='<td>'+cmt+'</td>';
+          str +='</tr>';
+          $("#comments_tbl").append(str);
+        });
+  }
+</script>

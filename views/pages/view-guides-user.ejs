@@ -1,0 +1,119 @@
+    <!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Guides forum</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="hover.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+	</head>
+	<body class="subpage">
+
+    <!-- Header -->
+      <header class = "header-user-dropdown" id="header">
+        <div class="inner">
+          <a href="index" class="logo"><strong>Commuteny Forum</strong></a>
+          <nav id="nav">
+						<div class = "header-limiter">
+            <a href="about">About</a>
+            <a href="view-guides"> Forum </a>
+						<a href="profile"><%= data.fname%> <%= data.lname %></a>
+
+
+          <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+        </div>
+      </header>
+
+		<!-- Three -->
+			<section id="three" class="wrapper">
+				<div>
+					<p class="align-left">
+          <h3><strong>Guides</strong></h3>
+        </p>
+          <div class="table-wrapper">
+          
+												<form name="addguide" action="addguide" method="post">
+								        <button class="submit">Add Guide</button>
+								        <input type="hidden" value="<%= data.fname%> <%= data.lname %>" name="userdata"></input>
+												</form>
+										<table class="alt">
+											<thead>
+												<tr>
+													<th>Title</th>
+                          <th>Content</th>
+                          <th>Posted By</th>
+													<th>Upvotes</th>
+													<th>Downvotes</th>
+												</tr>
+											</thead>
+											<form name="add-comment-user" action="add-comment-user" method="post">
+											<tbody>
+												<tr>
+                          <td><button class="submit">DLSU to Greebelt by MRT</button></td>
+                          <input type="hidden" value="<%= data.fname%> <%= data.lname %>" name="userdata"></input>
+                          <td>Hi guys! So here's my...</td>
+                          <td>kek</td>
+													<td><div style ="float:right down;"><span class="fa fa-chevron-up colorgreen"> </span>&nbsp; 300 </div></td>
+													<td><div style ="float:left;"><span class="fa fa-chevron-down coloured"> </span> &nbsp; 54 </div></td>
+												</tr>
+											</form>
+												<tr>
+                          <td><a href=#>Angono to Makati by FX</a></td>
+													<td>Here's how you get to Ag..</td>
+													<td>kekser</td>
+													<td><div style ="float:right down;"><span class="fa fa-chevron-up colorgreen"> </span>&nbsp;500 </div></td>
+													<td><div style ="float:left;"><span class="fa fa-chevron-down coloured"> </span> &nbsp; 100 </div></td>
+												</tr>
+
+												<tr>
+                          <td><a href=#>Shaw Boulevard to Angono by FX</a></td>
+													<td>FX route to Shaw..</td>
+													<td>kekeroni</td>
+													<td><div style ="float:right down;"><span class="fa fa-chevron-up colorgreen"> </span>&nbsp;63 </div></td>
+													<td><div style ="float:left;"><span class="fa fa-chevron-down coloured"> </span> &nbsp; 287 </div></td>
+
+												</tr>
+												<tr>
+                          <td><a href=#>Ayala to BGC by LRT</a></td>
+													<td>Hi everyone! My daily commu..</td>
+													<td>kekenizer</td>
+													<td><div style ="float:right down;"><span class="fa fa-chevron-up colorgreen"> </span>&nbsp;100</div></td>
+													<td><div style ="float:left;"><span class="fa fa-chevron-down coloured"> </span> &nbsp;256</div></td>
+
+												</tr>
+												<tr>
+													<td>Taft to Pasig by Bus</td>
+													<td>Kamusta mga repa peps! Ito ang aki...</td>
+													<td>hatdog</td>
+													<td><div style ="float:right down;"><span class="fa fa-chevron-up colorgreen"> </span>&nbsp;674 </div></td>
+													<td><div style ="float:left;"><span class="fa fa-chevron-down coloured"> </span> &nbsp;256</div></div></td>
+												</tr>
+
+                        </tbody>
+                        <tfoot>
+												<tr>
+													<td colspan="4"></td>
+													<td><strong>1</strong> 2 3 4 5..89 90 next</td>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+                    </div>
+			</section>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="inner">
+					<div class="copyright">
+						&copy;Sadtech
+					</div>
+
+				</div>
+			</footer>
+
+		
+
+	</body>
+</html>

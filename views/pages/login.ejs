@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Login</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+
+	<body class="subpage">
+
+    <!-- Header -->
+      <header class = "header-user-dropdown" id="header">
+        <div class="inner">
+          <a href="index" class="logo"><strong>Commuteny Forum</strong></a>
+          <nav id="nav">
+						<div class = "header-limiter">
+            <a href="about">About</a>
+            <a href="view-guides"> Forum </a>
+						<a href="login"> Login / Sign Up </a>
+
+
+          <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+        </div>
+      </header>
+
+		<!-- Body -->
+
+			<section id="three" class="wrapper">
+				<div class="inner" >
+
+					<header>
+						<h2>Login to your account</h2>
+					</header>
+
+
+                <!-- LOG-IN FORM -->
+                    <form name="login" action="login" method="post" >
+                    	
+                <h4>E-mail:</h4>
+                <input type="text" class="form-control" style="width:400px;" placeholder="Enter Username" name="username"
+                value= "" required/>
+
+                  <br>
+
+                <h4>Password:</h4>
+                <input type="password" class="form-control" style="width:400px;" placeholder="Enter Password" name="password"
+                value= "" required>
+
+                  <br>
+
+                <h4>No account? Sign up <strong><u><a href="register">HERE</a></strong></u></h4>
+
+                <!-- submit button -->
+                <p><input type="submit" name="submit" class="btn btn-success"></button>
+                    </form>
+                      <br>
+				</div>
+			</section>
+
+	</body>
+</html>

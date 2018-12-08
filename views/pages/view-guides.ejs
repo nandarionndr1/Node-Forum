@@ -1,0 +1,156 @@
+    <!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Guides forum</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="hover.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="assets/js/jquery.min.js"></script>
+	</head>
+	<body class="subpage">
+
+    <!-- Header -->
+      <header class = "header-user-dropdown" id="header">
+        <div class="inner">
+          <a href="index" class="logo"><strong>Commuteny Forum</strong></a>
+          <nav id="nav">
+						<div class = "header-limiter">
+            <a href="about">About</a>
+            <a href="view-guides"> Forum </a>
+						<a href="login"> <% if (current_user == null){ %> Login / Sign Up 
+									<%}else{%>
+										<%= current_user.fname%> <%= current_user.lname %>
+									<%}%>
+						</a>
+
+
+          <a href="#navPanel" class="navPanelToggle"><span class="fa fa-bars"></span></a>
+        </div>
+      </header>
+
+		<!-- Three -->
+			<section id="three" class="wrapper">
+				<div>
+					<p class="align-left">
+						
+				<% if (current_user != null){ %> 
+					<a href="/addguide"><button class="submit">Add Guide</button></a>
+				<% } %>
+          <h3><strong>Guides</strong></h3>
+        </p>
+          <div class="table-wrapper">
+										<table class="alt">
+											<thead>
+												<tr>
+													<th>Display Picture</th>
+													<th>Title</th>
+													<th>Content</th>
+													<th>Posted By</th>
+												</tr>
+											</thead>
+											<tbody id="guide_tbl">
+											    
+                        </tbody>
+										</table>
+									</div>
+									<center id="spinnur" style="display:none">
+										<img src='assets/spinnur.gif' style="height:10vh;width:15vw">
+									</center>
+                    </div>
+			</section>
+	</body>
+
+	<input type="hidden" id="row" value="0">
+	<input type="hidden" id="all" value="<%= all_count %>">
+</html>
+<script>
+	var otor = null;
+
+	
+	 $.get( "/getGuides/?start=0")
+	 .done(function(data) {
+		var ctr = 0;
+		var dd = data.slice(0,5);
+		
+		console.log(dd);
+		for(d in dd){	
+			
+				str ='<tr>';
+				str+='<td><img src="'+dd[d].pic+'" style="height:20vh;width:20vw;"></td>';
+				<% if (current_user == null){%>
+					str+='<td><a href="/guide/'+dd[d]._id+'">'+dd[d].title+'</a></td>';
+				<%}else{%>
+				if(dd[d].author == '<%= current_user._id %>'){
+					str+='<td><a href="/guide/'+dd[d]._id+'">'+dd[d].title+'</a><form action="/view-edit-guide" method="post">';
+					str+='<input type="hidden" name="id" value="'+dd[d]._id+'"><button type="submit">EDIT</button></form></td>'
+				}else{
+					str+='<td><a href="/guide/'+dd[d]._id+'">'+dd[d].title+'</a></td>';
+				}
+				<%}%>
+				str+='<td>'+dd[d].description+'</td>';
+				getAuth(str,dd[d].author);		
+				
+		}
+		});
+		function getAuth(str,auth_id){
+			$.get( "/getAuthorDetails/?id="+auth_id)
+					.done(function(auth) {
+						console.log("d",d);
+						otor = auth[0].fname + " "+ auth[0].lname;
+						author_id = auth[0]._id;
+						str +='<td><a href="//">'+otor+'</a></td>';
+						str +='</tr>';
+						$("#guide_tbl").append(str);
+						console.log("append",auth_id);
+					});
+		}
+		$(document).ready(function(){
+			$(window).scroll(function(){
+						var position = $(window).scrollTop();
+						var bottom = $(document).height() - $(window).height();
+
+						if( position == bottom ){
+							
+						console.log("reached bottom!");
+						$("#spinnur").show();
+						var row = Number($('#row').val());
+						var allcount = Number($('#all').val());
+						var rowperpage = 4;
+						row = row + rowperpage;
+
+						console.log("zucc pa? all_ct: ",allcount);
+						console.log("zucc pa? rw: ",row);
+						if(row <= allcount){
+							$('#row').val(row);
+							$.ajax({
+								url: '/lazyLoadGuide',
+								type: 'post',
+								data: {row:row},
+								success: function(data){
+									console.log(data);
+									for(d in data){
+										str ='<tr>';
+										str+='<td><img src="'+data[d].pic+'"  style="height:20vh;width:20vh;"></td>';
+										<% if (current_user == null){%>
+											str+='<td><a href="/guide/'+data[d]._id+'">'+data[d].title+'</a></td>';
+										<%}else{%>
+										if(data[d].author == '<%= current_user._id %>'){
+											str+='<td><a href="/guide/'+data[d]._id+'">'+data[d].title+'</a><form action="/view-edit-guide" method="post">';
+											str+='<input type="hidden" name="id" value="'+data[d]._id+'"><button type="submit">EDIT</button></form></td>'
+										}else{
+											str+='<td><a href="/guide/'+data[d]._id+'">'+data[d].title+'</a></td>';
+										}
+										<%}%>
+										str+='<td>'+data[d].description+'</td>';
+										getAuth(str,data[d].author);	
+									}
+									$("#spinnur").hide();
+								}
+							});
+						}
+						}
+					});
+	});
+</script>
